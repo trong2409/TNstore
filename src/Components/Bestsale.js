@@ -85,37 +85,40 @@ function Bestsale() {
         },
     ]);
     const [loading, setLoading] = useState(false);
-    const sliderSettings =useMemo(()=>({
-        dots: true,
-        infinite: true,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        autoplay: false,
-        autoplaySpeed: 2000,
-        responsive: [
-            {
-                breakpoint: 768,
-                settings: {
-                    arrows: false,
-                    slidesToShow: 3,
+    const sliderSettings = useMemo(
+        () => ({
+            dots: true,
+            infinite: true,
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            autoplay: false,
+            autoplaySpeed: 2000,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        arrows: false,
+                        slidesToShow: 3,
+                    },
                 },
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    arrows: false,
-                    slidesToShow: 2,
+                {
+                    breakpoint: 600,
+                    settings: {
+                        arrows: false,
+                        slidesToShow: 2,
+                    },
                 },
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    arrows: false,
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                        arrows: false,
+                    },
                 },
-            },
-        ],
-    }));
+            ],
+        }),
+        [],
+    );
 
     const saleProduct = products.filter((product) => {
         return product.promotionPercent >= 25;
