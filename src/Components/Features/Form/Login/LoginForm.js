@@ -1,15 +1,12 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
-import TextField from '../FormFields/TextField';
 import EmailField from '../FormFields/EmailField';
 import PasswordField from '../FormFields/PasswordField';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
+
 
 function LoginForm(props) {
     const schema = yup
@@ -40,16 +37,6 @@ function LoginForm(props) {
 
     const onSubmit = (data) => console.log(data);
 
-    const uiConfig = {
-        // Popup signin flow rather than redirect flow.
-        signInFlow: 'redirect',
-        // We will display Google and Facebook as auth providers.
-        signInSuccessUrl: './',
-        signInOptions: [
-            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-            // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-        ],
-    };
     return (
         <div className="mt-14 w-full ">
             <div className="container px-4 lg:px-8 mx-auto flex items-center justify-center ">
@@ -126,14 +113,6 @@ function LoginForm(props) {
                             </div>
                         </div>
                         <hr />
-                        <div className="flex justify-center">
-                            <div className="text-sm">
-                                <StyledFirebaseAuth
-                                    uiConfig={uiConfig}
-                                    firebaseAuth={firebase.auth()}
-                                />
-                            </div>
-                        </div>
                     </form>
                 </div>
             </div>

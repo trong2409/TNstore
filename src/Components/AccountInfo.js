@@ -1,14 +1,11 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../Components/Features/Form/userSlice';
-import firebase from 'firebase/compat/app';
 
 function AccountInfo() {
     const dispatch = useDispatch();
     const handleClickLogoutBtn = () => {
         dispatch(logout());
-        firebase.auth().signOut();
-        localStorage.removeItem('firebaseRememberAccount');
     };
 
     return (

@@ -26,7 +26,7 @@ function ProductThumbnail({ product }) {
                     src={product.image}
                     alt={product.title}
                 />
-                <div className="text-sm flex justify-between absolute bottom-0 w-full p-2 leading-[1rem] bg-slate-200 divide-x divide-gray-700 invisible group-hover:visible animate-bounce">
+                <div className="text-sm flex justify-between absolute bottom-0 w-full p-2 leading-[1rem] bg-slate-200 divide-x divide-gray-700 invisible group-hover:visible">
                     <p
                         className="text-xs cursor-pointer hover:opacity-70"
                         onClick={() => handleAddItem(product)}

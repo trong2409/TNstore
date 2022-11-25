@@ -1,12 +1,10 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react';
-import productsApi from '~/API/ProductsApi';
+import { useState } from 'react';
 import Pagination from '@mui/material/Pagination';
 import ProductsFilters from '~/Components/ProductFilters/ProductsFilters';
 import ProductlistLoading from '~/Components/ProductlistLoading';
 import ProductThumbnail from '~/Components/ProductThumbnail';
-import { text } from '@fortawesome/fontawesome-svg-core';
 
 function Products() {
     const [filters, setFilters] = useState({
@@ -18,51 +16,85 @@ function Products() {
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [order, setOrder] = useState('asc');
-    const [filterProductList, setFilterProductList] = useState([]);
+    const [filterProductList, setFilterProductList] = useState([
+        {
+            id: 7,
+            title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
+            description:
+                'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
+            category: 1,
+            image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
+            originalPrice: 3000000,
+            salePrice: 2700000,
+            isPromotion: false,
+            promotionPercent: 30,
+            isFreeShip: true,
+            rating: {
+                rate: 4.8,
+                count: 12,
+            },
+            color: 'xanh',
+            size: 39,
+        },
+        {
+            id: 7,
+            title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
+            description:
+                'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
+            category: 1,
+            image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
+            originalPrice: 3000000,
+            salePrice: 2700000,
+            isPromotion: false,
+            promotionPercent: 30,
+            isFreeShip: true,
+            rating: {
+                rate: 4.8,
+                count: 12,
+            },
+            color: 'xanh',
+            size: 39,
+        },
+        {
+            id: 7,
+            title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
+            description:
+                'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
+            category: 1,
+            image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
+            originalPrice: 3000000,
+            salePrice: 2700000,
+            isPromotion: false,
+            promotionPercent: 30,
+            isFreeShip: true,
+            rating: {
+                rate: 4.8,
+                count: 12,
+            },
+            color: 'xanh',
+            size: 39,
+        },
+        {
+            id: 7,
+            title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
+            description:
+                'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
+            category: 1,
+            image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
+            originalPrice: 3000000,
+            salePrice: 2700000,
+            isPromotion: false,
+            promotionPercent: 30,
+            isFreeShip: true,
+            rating: {
+                rate: 4.8,
+                count: 12,
+            },
+            color: 'xanh',
+            size: 39,
+        },
+    ]);
     const [totalPage, setTotalPage] = useState(6);
-
-    useEffect(() => {
-        (async () => {
-            try {
-                setLoading(true);
-                const data = await productsApi.getAll({
-                    _page: page,
-                    _limit: 9,
-                    _sort: 'originalPrice',
-                    _order: order,
-                    category: filters.categoryIds,
-                    color: filters.colors,
-                    size: filters.size,
-                });
-                setFilterProductList(data);
-                setLoading(false);
-            } catch {
-                console.log('error');
-            }
-        })();
-    }, [page, order, filters]);
-
-    useEffect(() => {
-        (async () => {
-            try {
-                const data = await productsApi.getAll({
-                    category: filters.categoryIds,
-                    color: filters.colors,
-                    size: filters.size,
-                });
-                const totalProduct = data.length;
-                totalProduct
-                    ? setTotalPage(Math.ceil(totalProduct / 9))
-                    : setTotalPage(1);
-            } catch {
-                console.log('error');
-            }
-        })();
-    }, [page, order, filters]);
-
-    useEffect(() => {
-        setPage(1);
-    }, [filters]);
 
     const handleChangePage = (e, value) => {
         setPage(value);
