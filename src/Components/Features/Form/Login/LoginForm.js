@@ -84,7 +84,7 @@ function LoginForm(props) {
 
                             <div className="text-sm">
                                 <a
-                                    href="#"
+                                    href="https://google.com"
                                     className="font-normal text-indigo-600 hover:text-indigo-500"
                                 >
                                     Quên mật khẩu

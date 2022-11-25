@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 function SizeFilter({ filters, onChange }) {
     const sizesList = [36, 37, 38, 39];
     const [sizes, setSizes] = useState([]);
-
     const hanldeChangeSize = (size) => {
         setSizes((prev) => {
             if (sizes.includes(size)) {
@@ -14,13 +13,15 @@ function SizeFilter({ filters, onChange }) {
         });
     };
 
-    useEffect(() => {
-        onChange(sizes);
-    }, [sizes]);
+    useEffect(() => {}, []);
+    // useEffect(() => {
+    //     onChange(sizes);
+    //     // eslint-disable-next-line
+    // }, [sizes]);
 
-    useEffect(() => {
-        setSizes([]);
-    }, [filters.active]);
+    // useEffect(() => {
+    //     setSizes([]);
+    // }, [filters.active]);
 
     return (
         <div className="mb-8">

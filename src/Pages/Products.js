@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import Pagination from '@mui/material/Pagination';
@@ -16,86 +16,8 @@ function Products() {
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [order, setOrder] = useState('asc');
-    const [filterProductList, setFilterProductList] = useState([
-        {
-            id: 7,
-            title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
-            description:
-                'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
-            category: 1,
-            image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
-            originalPrice: 3000000,
-            salePrice: 2700000,
-            isPromotion: false,
-            promotionPercent: 30,
-            isFreeShip: true,
-            rating: {
-                rate: 4.8,
-                count: 12,
-            },
-            color: 'xanh',
-            size: 39,
-        },
-        {
-            id: 7,
-            title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
-            description:
-                'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
-            category: 1,
-            image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
-            originalPrice: 3000000,
-            salePrice: 2700000,
-            isPromotion: false,
-            promotionPercent: 30,
-            isFreeShip: true,
-            rating: {
-                rate: 4.8,
-                count: 12,
-            },
-            color: 'xanh',
-            size: 39,
-        },
-        {
-            id: 7,
-            title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
-            description:
-                'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
-            category: 1,
-            image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
-            originalPrice: 3000000,
-            salePrice: 2700000,
-            isPromotion: false,
-            promotionPercent: 30,
-            isFreeShip: true,
-            rating: {
-                rate: 4.8,
-                count: 12,
-            },
-            color: 'xanh',
-            size: 39,
-        },
-        {
-            id: 7,
-            title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
-            description:
-                'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
-            category: 1,
-            image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
-            originalPrice: 3000000,
-            salePrice: 2700000,
-            isPromotion: false,
-            promotionPercent: 30,
-            isFreeShip: true,
-            rating: {
-                rate: 4.8,
-                count: 12,
-            },
-            color: 'xanh',
-            size: 39,
-        },
-    ]);
+    const [filterProductList, setFilterProductList] = useState([]);
     const [totalPage, setTotalPage] = useState(6);
-
     const handleChangePage = (e, value) => {
         setPage(value);
     };
@@ -106,15 +28,97 @@ function Products() {
         setOrder('desc');
     };
     const handleFiltersChange = (newFilters) => {
-        setFilters(prev => {
+        setFilters((prev) => {
             return { ...prev, ...newFilters };
         });
     };
-
     const [isFilterBarOpen, setIsFilterbarOpen] = useState(false);
     const handleOpenFilter = () => {
         setIsFilterbarOpen(true);
     };
+
+    useEffect(() => {
+        setLoading(false);
+        setFilterProductList([
+            {
+                id: 7,
+                title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
+                description:
+                    'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
+                category: 1,
+                image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
+                originalPrice: 3000000,
+                salePrice: 2700000,
+                isPromotion: false,
+                promotionPercent: 30,
+                isFreeShip: true,
+                rating: {
+                    rate: 4.8,
+                    count: 12,
+                },
+                color: 'xanh',
+                size: 39,
+            },
+            {
+                id: 7,
+                title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
+                description:
+                    'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
+                category: 1,
+                image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
+                originalPrice: 3000000,
+                salePrice: 2700000,
+                isPromotion: false,
+                promotionPercent: 30,
+                isFreeShip: true,
+                rating: {
+                    rate: 4.8,
+                    count: 12,
+                },
+                color: 'xanh',
+                size: 39,
+            },
+            {
+                id: 7,
+                title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
+                description:
+                    'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
+                category: 1,
+                image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
+                originalPrice: 3000000,
+                salePrice: 2700000,
+                isPromotion: false,
+                promotionPercent: 30,
+                isFreeShip: true,
+                rating: {
+                    rate: 4.8,
+                    count: 12,
+                },
+                color: 'xanh',
+                size: 39,
+            },
+            {
+                id: 7,
+                title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
+                description:
+                    'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
+                category: 1,
+                image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
+                originalPrice: 3000000,
+                salePrice: 2700000,
+                isPromotion: false,
+                promotionPercent: 30,
+                isFreeShip: true,
+                rating: {
+                    rate: 4.8,
+                    count: 12,
+                },
+                color: 'xanh',
+                size: 39,
+            },
+        ]);
+        setTotalPage(6);
+    }, []);
 
     return (
         <div className="my-20 lg:my-28">
@@ -165,15 +169,23 @@ function Products() {
                         <div className="flex  justify-center md:justify-end">
                             {filterProductList.length ? (
                                 <div className="flex border border-solid border-gray-500  ">
-                                    <p  
-                                        className={order==='asc'? 'text-sm font-medium px-4 py-1 hover:cursor-pointer text-white bg-black ' : 'text-sm font-medium px-4 py-1 hover:cursor-pointer hover:text-white hover:bg-black '}
+                                    <p
+                                        className={
+                                            order === 'asc'
+                                                ? 'text-sm font-medium px-4 py-1 hover:cursor-pointer text-white bg-black '
+                                                : 'text-sm font-medium px-4 py-1 hover:cursor-pointer hover:text-white hover:bg-black '
+                                        }
                                         onClick={handleOrderChangeAsc}
                                     >
                                         Giá tăng dần
                                     </p>
                                     <p
                                         onClick={handleOrderChangeDesc}
-                                        className={order==='desc'? "text-sm font-medium px-4 py-1 hover:cursor-pointer text-white bg-black" : "text-sm font-medium px-4 py-1 hover:cursor-pointer hover:text-white hover:bg-black"}
+                                        className={
+                                            order === 'desc'
+                                                ? 'text-sm font-medium px-4 py-1 hover:cursor-pointer text-white bg-black'
+                                                : 'text-sm font-medium px-4 py-1 hover:cursor-pointer hover:text-white hover:bg-black'
+                                        }
                                     >
                                         Giá giảm dần
                                     </p>

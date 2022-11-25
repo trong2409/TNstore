@@ -29,8 +29,8 @@ function CheckOut() {
                 .required('* Vui lòng nhập địa chỉ email')
                 .email('*Vui lòng nhập địa chỉ email hợp lệ'),
             phone: yup.string()
-            .required("Vui lòng nhập số điện thoại")
-            .matches('^[+\0]?[0-9]{3}[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$', '* Vui lòng nhập số điện thoại hợp lệ'),
+            .required("Vui lòng nhập số điện thoại"),
+            // .matches('^[+\0]?[0-9]{3}[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$', '* Vui lòng nhập số điện thoại hợp lệ'),
             adresss: yup.string().required('* Vui lòng nhập địa chỉ của bạn'),
             paymentmethod: yup
                 .string()

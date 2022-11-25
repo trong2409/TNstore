@@ -14,13 +14,16 @@ function ColorFilter({ filters, onChange }) {
         });
     };
 
-    useEffect(() => {
-        onChange(colors);
-    }, [colors]);
+    useEffect(() => {}, []);
+    // useEffect(() => {
+    //     onChange(colors);
+    //     // eslint-disable-next-line
+    // }, [colors]);
 
-    useEffect(() => {
-        setColors([]);
-    }, [filters.active]);
+    // useEffect(() => {
+    //     setColors([]);
+    //     // eslint-disable-next-line
+    // }, [filters.active]);
 
     return (
         <div className="mb-8">
