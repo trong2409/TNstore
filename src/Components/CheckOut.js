@@ -1,4 +1,4 @@
-import React from 'react';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -7,11 +7,25 @@ import TextField from './Features/Form/FormFields/TextField';
 import TextareaField from './Features/Form/FormFields/TextareaField';
 import RadioField from './Features/Form/FormFields/RadioField';
 import { useSelector } from 'react-redux';
+import { setCartLocalStorage } from '~/API/localStorage';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { clearCart } from '~/redux/Slices/cartSlice';
 
 function CheckOut() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const cartProducts = useSelector((state) => state.cart);
-    const subTotal = cartProducts.reduce((total, product) => {
-        return total + product.quantity * product.salePrice;
+    const getSalePrice = useMemo(() => {
+        return (product) => {
+            return (
+                product.originalPrice -
+                (product.originalPrice * product.promotionPercent) / 100
+            );
+        };
+    }, []);
+    const subTotal = cartProducts.reduce((total, { product, quantity }) => {
+        return total + quantity * getSalePrice(product);
     }, 0);
 
     const orderInfor = {
@@ -28,8 +42,7 @@ function CheckOut() {
                 .string()
                 .required('* Vui lòng nhập địa chỉ email')
                 .email('*Vui lòng nhập địa chỉ email hợp lệ'),
-            phone: yup.string()
-            .required("Vui lòng nhập số điện thoại"),
+            phone: yup.string().required('Vui lòng nhập số điện thoại'),
             // .matches('^[+\0]?[0-9]{3}[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$', '* Vui lòng nhập số điện thoại hợp lệ'),
             adresss: yup.string().required('* Vui lòng nhập địa chỉ của bạn'),
             paymentmethod: yup
@@ -54,7 +67,13 @@ function CheckOut() {
     });
 
     const onSubmit = (data) => {
-        console.log({ ...data, ...orderInfor, total });
+        if (cartProducts.length === 0) {
+            window.alert('Bạn chưa chọn sản phẩm nào!');
+            return;
+        }
+        setCartLocalStorage([]);
+        dispatch(clearCart());
+        navigate('../cart');
     };
 
     return (
@@ -123,62 +142,73 @@ function CheckOut() {
                                             </div>
                                         </div>
                                     </div>
-                                    {cartProducts.map((product) => {                                       
-                                        return (
-                                            <div
-                                                key={product.id}
-                                                className="mb-3 flex items-center text-sm font-nomal bg-slate-50"
-                                            >
-                                                <div className="flex flex-col md:flex-row w-1/2 items-center ">
-                                                    <div>
-                                                        <img
-                                                            src={product.image}
-                                                            width={140}
-                                                            height={140}
-                                                            alt={product.title}
-                                                        />
-                                                    </div>
-                                                    <div className="pr-4 w-full truncate">
-                                                        <p>{product.title}</p>
-                                                    </div>
-                                                </div>
-                                                <div className="w-1/2 flex flex-col md:flex-row justify-between items-center">
-                                                    <div className="w-full md:w-1/3 mb-1 md:mb-0 pl-4 ">
-                                                        {new Intl.NumberFormat(
-                                                            'vi-VN',
-                                                            {
-                                                                style: 'currency',
-                                                                currency: 'VND',
-                                                            },
-                                                        ).format(
-                                                            product.salePrice,
-                                                        )}
-                                                    </div>
-                                                    <div className="w-full md:w-1/3 mb-1 md:mb-0 pl-4">
-                                                        <div className="w-8 flex items-center ">
-                                                            <span className="px-2 border border-spacing-2 border-black">
-                                                                {
-                                                                    product.quantity
+                                    {cartProducts.map(
+                                        ({ product, quantity }) => {
+                                            return (
+                                                <div
+                                                    key={product._id}
+                                                    className="mb-3 flex items-center text-sm font-nomal bg-slate-50"
+                                                >
+                                                    <div className="flex flex-col md:flex-row w-1/2 items-center ">
+                                                        <div>
+                                                            <img
+                                                                src={
+                                                                    product.image
                                                                 }
-                                                            </span>
+                                                                width={140}
+                                                                height={140}
+                                                                alt={
+                                                                    product.title
+                                                                }
+                                                            />
+                                                        </div>
+                                                        <div className="pr-4 w-full truncate">
+                                                            <p>
+                                                                {product.title}
+                                                            </p>
                                                         </div>
                                                     </div>
-                                                    <div className="w-full md:w-1/3 mb-1 md:mb-0 pl-4 ">
-                                                        {new Intl.NumberFormat(
-                                                            'vi-VN',
-                                                            {
-                                                                style: 'currency',
-                                                                currency: 'VND',
-                                                            },
-                                                        ).format(
-                                                            product.salePrice *
-                                                                product.quantity,
-                                                        )}
+                                                    <div className="w-1/2 flex flex-col md:flex-row justify-between items-center">
+                                                        <div className="w-full md:w-1/3 mb-1 md:mb-0 pl-4 ">
+                                                            {new Intl.NumberFormat(
+                                                                'vi-VN',
+                                                                {
+                                                                    style: 'currency',
+                                                                    currency:
+                                                                        'VND',
+                                                                },
+                                                            ).format(
+                                                                getSalePrice(
+                                                                    product,
+                                                                ),
+                                                            )}
+                                                        </div>
+                                                        <div className="w-full md:w-1/3 mb-1 md:mb-0 pl-4">
+                                                            <div className="w-8 flex items-center ">
+                                                                <span className="px-2 border border-spacing-2 border-black">
+                                                                    {quantity}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="w-full md:w-1/3 mb-1 md:mb-0 pl-4 ">
+                                                            {new Intl.NumberFormat(
+                                                                'vi-VN',
+                                                                {
+                                                                    style: 'currency',
+                                                                    currency:
+                                                                        'VND',
+                                                                },
+                                                            ).format(
+                                                                getSalePrice(
+                                                                    product,
+                                                                ) * quantity,
+                                                            )}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        );
-                                    })}
+                                            );
+                                        },
+                                    )}
                                 </div>
                                 <div>
                                     <div className="flex justify-between  text-base font-nomal">

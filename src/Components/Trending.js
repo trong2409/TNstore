@@ -1,93 +1,18 @@
-import React, { useEffect } from 'react';
-import { useState, useMemo } from 'react';
-import ProductSlideLoading from '~/Components/ProductSlideLoading';
+import { useMemo,useEffect } from 'react';
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import ProductSlideLoading from '~/Components/ProductSlideLoading';
 import ProductThumbnail from '~/Components/ProductThumbnail';
+import { GetTrenddingProducts } from '~/redux/Slices/TrendingSlice';
 
 function Trending() {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const products = useSelector((state) => state.Trending.data);
+    const loading = useSelector((state) => state.Trending.isLoading);
     useEffect(() => {
-        setProducts([
-            {
-                id: 7,
-                title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
-                description:
-                    'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
-                category: 1,
-                image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
-                originalPrice: 3000000,
-                salePrice: 2700000,
-                isPromotion: false,
-                promotionPercent: 30,
-                isFreeShip: true,
-                rating: {
-                    rate: 4.8,
-                    count: 12,
-                },
-                color: 'xanh',
-                size: 39,
-            },
-            {
-                id: 7,
-                title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
-                description:
-                    'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
-                category: 1,
-                image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
-                originalPrice: 3000000,
-                salePrice: 2700000,
-                isPromotion: false,
-                promotionPercent: 30,
-                isFreeShip: true,
-                rating: {
-                    rate: 4.8,
-                    count: 12,
-                },
-                color: 'xanh',
-                size: 39,
-            },
-            {
-                id: 7,
-                title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
-                description:
-                    'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
-                category: 1,
-                image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
-                originalPrice: 3000000,
-                salePrice: 2700000,
-                isPromotion: false,
-                promotionPercent: 30,
-                isFreeShip: true,
-                rating: {
-                    rate: 4.8,
-                    count: 12,
-                },
-                color: 'xanh',
-                size: 39,
-            },
-            {
-                id: 7,
-                title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
-                description:
-                    'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
-                category: 1,
-                image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
-                originalPrice: 3000000,
-                salePrice: 2700000,
-                isPromotion: false,
-                promotionPercent: 30,
-                isFreeShip: true,
-                rating: {
-                    rate: 4.8,
-                    count: 12,
-                },
-                color: 'xanh',
-                size: 39,
-            },
-        ]);
-        setLoading(false);
+        dispatch(GetTrenddingProducts());
+        // eslint-disable-next-line
     }, []);
     const sliderSettings = useMemo(
         () => ({
@@ -124,10 +49,6 @@ function Trending() {
         [],
     );
 
-    const saleProduct = products.filter((product) => {
-        return (product.rating.rate = 5);
-    });
-
     return (
         <div className="mt-12">
             <div className="flex justify-between items-baseline">
@@ -146,10 +67,10 @@ function Trending() {
                     <ProductSlideLoading />
                 ) : (
                     <Slider {...sliderSettings}>
-                        {saleProduct.map((product) => {
+                        {products.map((product) => {
                             return (
                                 <div
-                                    key={product.id}
+                                    key={product._id}
                                     className="sm:px-2 md:px-2 lg:px-2"
                                 >
                                     <ProductThumbnail product={product} />

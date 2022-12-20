@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { GetColors } from '~/redux/Slices/ProductsSlice';
 
 function ColorFilter({ filters, onChange }) {
-    const colorsList = ['trắng', 'đen', 'đỏ', 'hồng', 'vàng', 'xanh'];
-    const [colors, setColors] = useState([]);
-
+    const dispatch = useDispatch();
+    const colors = useSelector((state) => state.Products.colors);
+    const [colorIds, setColorIds] = useState([]);
     const hanldeChangeColor = (color) => {
-        setColors((prev) => {
-            if (colors.includes(color)) {
+        setColorIds((prev) => {
+            if (colorIds.includes(color)) {
                 return prev.filter((x) => x !== color);
             } else {
                 return [...prev, color];
@@ -14,31 +16,31 @@ function ColorFilter({ filters, onChange }) {
         });
     };
 
-    useEffect(() => {}, []);
-    // useEffect(() => {
-    //     onChange(colors);
-    //     // eslint-disable-next-line
-    // }, [colors]);
+    useEffect(() => {
+        dispatch(GetColors());
+    }, []);
 
-    // useEffect(() => {
-    //     setColors([]);
-    //     // eslint-disable-next-line
-    // }, [filters.active]);
+    useEffect(() => {
+        onChange(colorIds);
+    }, [colorIds]);
+    useEffect(() => {
+        setColorIds([]);
+    }, [filters.active]);
 
     return (
         <div className="mb-8">
             <h6 className="text-xl font-medium mt-3">MÀU SẮC</h6>
             <div>
-                {colorsList.map((color) => {
+                {colors.map((color) => {
                     return (
-                        <label key={color} className="checkbox-container">
+                        <label key={color._id} className="checkbox-container">
                             <input
                                 type="checkbox"
-                                onChange={() => hanldeChangeColor(color)}
-                                checked={colors.includes(color)}
+                                onChange={() => hanldeChangeColor(color._id)}
+                                checked={colorIds.includes(color._id)}
                             />
                             <span className="checkmark"></span>
-                            {`Màu ${color}`}
+                            {` ${color.name}`}
                         </label>
                     );
                 })}

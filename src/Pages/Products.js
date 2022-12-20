@@ -1,25 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
 import Pagination from '@mui/material/Pagination';
 import ProductsFilters from '~/Components/ProductFilters/ProductsFilters';
 import ProductlistLoading from '~/Components/ProductlistLoading';
 import ProductThumbnail from '~/Components/ProductThumbnail';
+import { GetProducts } from '~/redux/Slices/ProductsSlice';
 
 function Products() {
+    const disaptch = useDispatch();
+    const data = useSelector((state) => state.Products.result);
     const [filters, setFilters] = useState({
-        categoryIds: [],
-        size: [],
+        categories: [],
         colors: [],
-        active: false,
     });
-    const [loading, setLoading] = useState(false);
-    const [page, setPage] = useState(1);
     const [order, setOrder] = useState('asc');
-    const [filterProductList, setFilterProductList] = useState([]);
-    const [totalPage, setTotalPage] = useState(6);
     const handleChangePage = (e, value) => {
-        setPage(value);
+        const params = {
+            categories:
+                filters.categories.length > 0 ? filters.categories : null,
+            colors: filters.colors.length > 0 ? filters.colors : null,
+            order: order,
+            page: value,
+        };
+        disaptch(GetProducts(params));
     };
     const handleOrderChangeAsc = () => {
         setOrder('asc');
@@ -38,87 +42,22 @@ function Products() {
     };
 
     useEffect(() => {
-        setLoading(false);
-        setFilterProductList([
-            {
-                id: 7,
-                title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
-                description:
-                    'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
-                category: 1,
-                image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
-                originalPrice: 3000000,
-                salePrice: 2700000,
-                isPromotion: false,
-                promotionPercent: 30,
-                isFreeShip: true,
-                rating: {
-                    rate: 4.8,
-                    count: 12,
-                },
-                color: 'xanh',
-                size: 39,
-            },
-            {
-                id: 7,
-                title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
-                description:
-                    'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
-                category: 1,
-                image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
-                originalPrice: 3000000,
-                salePrice: 2700000,
-                isPromotion: false,
-                promotionPercent: 30,
-                isFreeShip: true,
-                rating: {
-                    rate: 4.8,
-                    count: 12,
-                },
-                color: 'xanh',
-                size: 39,
-            },
-            {
-                id: 7,
-                title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
-                description:
-                    'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
-                category: 1,
-                image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
-                originalPrice: 3000000,
-                salePrice: 2700000,
-                isPromotion: false,
-                promotionPercent: 30,
-                isFreeShip: true,
-                rating: {
-                    rate: 4.8,
-                    count: 12,
-                },
-                color: 'xanh',
-                size: 39,
-            },
-            {
-                id: 7,
-                title: 'Giày Converse Chuck Taylor All Star Classic - Navy',
-                description:
-                    'Để nói về một sản phẩm vừa đơn giản, vừa thanh lịch, vừa chất lượng và cực kỳ dễ sử dụng, phù hợp với nhiều hoàn cảnh, độ tuổi và các phong cách thời trang khác nhau, không thể nào không nhắc tới dòng sản phẩm giày Converse Classic - Chuck Taylor All được. Dòng sản phẩm này được những tín đồ thời trang trên khắp thế giới đánh giá là must-have item đáng sở hữu nhất mọi thời đại. ',
-                category: 1,
-                image: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/347/923/products/127440-2.png',
-                originalPrice: 3000000,
-                salePrice: 2700000,
-                isPromotion: false,
-                promotionPercent: 30,
-                isFreeShip: true,
-                rating: {
-                    rate: 4.8,
-                    count: 12,
-                },
-                color: 'xanh',
-                size: 39,
-            },
-        ]);
-        setTotalPage(6);
+        const param = { page: 1 };
+        disaptch(GetProducts(param));
+        // eslint-disable-next-line
     }, []);
+
+    useEffect(() => {
+        const params = {
+            categories:
+                filters.categories.length > 0 ? filters.categories : null,
+            colors: filters.colors.length > 0 ? filters.colors : null,
+            order: order,
+            page: 1,
+        };
+        disaptch(GetProducts(params));
+        // eslint-disable-next-line
+    }, [filters, order]);
 
     return (
         <div className="my-20 lg:my-28">
@@ -167,7 +106,7 @@ function Products() {
                     </div>
                     <div className="w-full lg:w-3/4">
                         <div className="flex  justify-center md:justify-end">
-                            {filterProductList.length ? (
+                            {data.data?.length ? (
                                 <div className="flex border border-solid border-gray-500  ">
                                     <p
                                         className={
@@ -193,13 +132,13 @@ function Products() {
                             ) : null}
                         </div>
                         <div className="flex flex-wrap my-8 sm:-mx-2 md:-mx-2 lg:-mx-2.5">
-                            {loading ? (
+                            {data.isLoading ? (
                                 <ProductlistLoading />
                             ) : (
-                                filterProductList.map((product) => {
+                                data.data.map((product) => {
                                     return (
                                         <div
-                                            key={product.id}
+                                            key={product._id}
                                             className="sm:px-2 md:px-2 lg:px-2 mb-2 w-full sm:w-1/2 md:w-1/2 lg:w-1/3"
                                         >
                                             <ProductThumbnail
@@ -211,15 +150,15 @@ function Products() {
                             )}
                         </div>
                         <div className="flex justify-center">
-                            {loading === false && !filterProductList.length && (
+                            {data.isLoading === false && !data.data?.length && (
                                 <p>Sorry ! Không tìm được sản phẩm phù hợp</p>
                             )}
                         </div>
                         <div className="flex justify-center">
-                            {filterProductList.length ? (
+                            {data.data?.length ? (
                                 <Pagination
-                                    count={totalPage}
-                                    page={page}
+                                    count={data.totalPage}
+                                    page={data.page}
                                     onChange={handleChangePage}
                                 />
                             ) : null}

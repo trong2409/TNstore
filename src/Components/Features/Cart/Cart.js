@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -7,11 +7,11 @@ import {
     updateQuantity,
     decrementAnItem,
     addToCart,
-} from './cartSlice';
+} from '../../../redux/Slices/cartSlice';
 import EmptyCart from './EmptyCart.js';
 
 function Cart() {
-    const cartProducts = useSelector(state => state.cart);
+    const cartProducts = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
     const handleRemoveItem = (id) => {
@@ -34,11 +34,21 @@ function Cart() {
         dispatch(addToCart(product));
     };
 
-    const totalItems = cartProducts.reduce((total, product) => {
-        return total + product.quantity;
+    const getSalePrice = useMemo(() => {
+        return (product) => {
+            return (
+                product.originalPrice -
+                (product.originalPrice * product.promotionPercent) / 100
+            );
+        };
+        // eslint-disable-next-line
+    }, []);
+
+    const totalItems = cartProducts.reduce((total, { product, quantity }) => {
+        return total + quantity;
     }, 0);
-    const subTotal = cartProducts.reduce((total, product) => {
-        return total + product.quantity * product.salePrice;
+    const subTotal = cartProducts.reduce((total, { product, quantity }) => {
+        return total + quantity * getSalePrice(product);
     }, 0);
 
     return (
@@ -69,11 +79,10 @@ function Cart() {
                                 </div>
                             </div>
 
-                            {cartProducts.map((product) => {
-                                const quantity = product.quantity;
+                            {cartProducts.map(({ product, quantity }) => {
                                 return (
                                     <div
-                                        key={product.id}
+                                        key={product._id}
                                         className="mb-3 flex items-center text-base  font-normal bg-slate-50"
                                     >
                                         <div className="flex flex-col md:flex-row w-1/3 items-center ">
@@ -87,7 +96,7 @@ function Cart() {
                                             </div>
                                             <div className="md:pl-4 w-full truncate">
                                                 <Link
-                                                    to={`/products/${product.id}`}
+                                                    to={`/products/${product._id}`}
                                                 >
                                                     {product.title}
                                                 </Link>
@@ -102,7 +111,9 @@ function Cart() {
                                                             style: 'currency',
                                                             currency: 'VND',
                                                         },
-                                                    ).format(product.salePrice)}
+                                                    ).format(
+                                                        getSalePrice(product),
+                                                    )}
                                                 </div>
                                                 <div className="w-full md:w-1/3 mb-1 md:mb-0 pl-4">
                                                     <div className="w-18 flex items-center border border-spacing-2 border-black ">
@@ -134,9 +145,7 @@ function Cart() {
                                                             <input
                                                                 className="w-full outline-none text-center"
                                                                 type="text"
-                                                                value={
-                                                                    product.quantity
-                                                                }
+                                                                value={quantity}
                                                                 onChange={(
                                                                     e,
                                                                 ) => {
@@ -176,8 +185,8 @@ function Cart() {
                                                             currency: 'VND',
                                                         },
                                                     ).format(
-                                                        product.salePrice *
-                                                            product.quantity,
+                                                        getSalePrice(product) *
+                                                            quantity,
                                                     )}
                                                 </div>
                                             </div>
@@ -187,7 +196,7 @@ function Cart() {
                                                     className="p-2.5 text-xs hover:opacity-70 hover:cursor-pointer"
                                                     onClick={() => {
                                                         handleRemoveItem(
-                                                            product.id,
+                                                            product._id,
                                                         );
                                                     }}
                                                 />

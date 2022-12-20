@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch } from 'react-redux';
-import { addToCart } from './Features/Cart/cartSlice';
+import { addToCart } from '../redux/Slices/cartSlice';
 import { useSnackbar } from 'notistack';
 
 function ProductThumbnail({ product }) {
@@ -37,7 +37,7 @@ function ProductThumbnail({ product }) {
                             icon="fa-solid fa-cart-plus"
                         />
                     </p>
-                    <Link to={`/products/${product.id}`}>
+                    <Link to={`/products/${product._id}`}>
                         <FontAwesomeIcon
                             className="pl-2 cursor-pointer hover:opacity-70"
                             icon="fa-solid fa-eye"

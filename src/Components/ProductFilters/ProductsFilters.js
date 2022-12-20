@@ -1,6 +1,5 @@
 import React from 'react';
 import CategoryFilter from './CategoryFilter';
-import SizeFilter from './SizeFilter';
 import ColorFilter from './ColorFilter';
 
 function ProductsFilters({ filters, onChange }) {
@@ -8,16 +7,7 @@ function ProductsFilters({ filters, onChange }) {
         if (!onChange) return;
         const newFilters = {
             ...filters,
-            categoryIds: newCategoryIds,
-            active: true,
-        };
-        onChange(newFilters);
-    };
-    const HandleSizeChange = (newSize) => {
-        if (!onChange) return;
-        const newFilters = {
-            ...filters,
-            size: newSize,
+            categories: newCategoryIds,
             active: true,
         };
         onChange(newFilters);
@@ -33,8 +23,7 @@ function ProductsFilters({ filters, onChange }) {
     };
     const handleRemoveFilters = () => {
         const newFilters = {
-            categoryIds: [],
-            size: [],
+            categories: [],
             colors: [],
             active: false,
         };
@@ -43,7 +32,6 @@ function ProductsFilters({ filters, onChange }) {
     return (
         <div>
             <CategoryFilter onChange={HandleCategoryChange} filters={filters} />
-            <SizeFilter onChange={HandleSizeChange} filters={filters} />
             <ColorFilter onChange={HandleColorChange} filters={filters} />
             <div
                 className="text-sm font-medium mt-5 px-4 py-1.5 inline-block border border-solid border-gray-500 hover:cursor-pointer text-white bg-black hover:text-black hover:bg-white "

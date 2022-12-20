@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { logout } from '../Components/Features/Form/userSlice';
+import { logout } from '../redux/Slices/userSlice';
 
 function AccountInfo() {
     const dispatch = useDispatch();

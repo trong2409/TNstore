@@ -1,6 +1,12 @@
-# Demo link
+# About this app
 
-To access TNstore [just click here!](https://github.com/facebook/create-react-app).
+This is a Shoe Store build on React for Front-end and Express for Back-end
+
+For more information about Back-end of this app, you can find [here](https://github.com/trong2409/TNstore-back-end).
+
+You can find demo of this app by click [here](http://tn-store-three.vercel.app/).
+
+Using [Redux]() for manage global state
 
 # Getting Started with Create React App
 
@@ -19,7 +25,3 @@ Then, run:
 ### `npm start`
 
 If every thing work well, you can find store in:
-
-### `http://localhost:3000/`
-
-Good luck <3
