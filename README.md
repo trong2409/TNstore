@@ -2,7 +2,7 @@
 
 # About this app
 
-This is a Shoe Store build on [React](https://reactjs.org/) for Front-end and [Express](https://expressjs.com/) for Back-end
+This is a Shoe Store build on [React](https://reactjs.org/) for Front-end, [Express](https://expressjs.com/) for Back-end and [MongoDB] for Database
 
 For more information about Back-end of this app, you can find [here](https://github.com/trong2409/TNstore-back-end).
 
