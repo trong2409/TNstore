@@ -4,7 +4,7 @@ This is a Shoe Store build on React for Front-end and Express for Back-end
 
 For more information about Back-end of this app, you can find [here](https://github.com/trong2409/TNstore-back-end).
 
-You can find demo of this app by click [here](http://tn-store-three.vercel.app/).
+You can find demo of this app by click [here](https://shoe-store-tn.vercel.app/).
 
 Using [Redux]() for manage global state
 
