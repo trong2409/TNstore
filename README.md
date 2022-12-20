@@ -1,3 +1,5 @@
+# This app is still in process dev
+
 # About this app
 
 This is a Shoe Store build on React for Front-end and Express for Back-end

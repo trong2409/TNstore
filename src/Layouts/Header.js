@@ -24,7 +24,7 @@ function Header() {
                             to="/"
                             className="leading-[5rem] text-4xl text-amber-300 font-bold text-shadow-xl shadow-yellow-400 "
                         >
-                            MStore
+                            TNStore
                         </Link>
                     </div>
                     <div className="flex-1 text-center space-x-6">
@@ -111,7 +111,7 @@ function Header() {
                             to="/"
                             className="leading-[4rem] text-2xl text-amber-400 font-bold text-shadow-md shadow-yellow-200 "
                         >
-                            MStore
+                            TNStore
                         </Link>
                     </div>
 
@@ -165,7 +165,7 @@ function Header() {
                                         to="/"
                                         className="mb-2.5 text-xl font-semibold text-black"
                                     >
-                                        MStore
+                                        TNStore
                                     </Link>
                                 </div>
                                 <div
