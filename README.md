@@ -2,13 +2,15 @@
 
 # About this app
 
-This is a Shoe Store build on React for Front-end and Express for Back-end
+This is a Shoe Store build on [React](https://reactjs.org/) for Front-end and [Express](https://expressjs.com/) for Back-end
 
 For more information about Back-end of this app, you can find [here](https://github.com/trong2409/TNstore-back-end).
 
 You can find demo of this app by click [here](https://shoe-store-tn.vercel.app/).
 
-Using [Redux]() for manage global state
+-   Using [Redux](https://redux-toolkit.js.org/) for manage global state
+-   Using [React-Router](https://reactrouter.com/en/main) for routing
+-   Using [Axios]() for fetching API
 
 # Getting Started with Create React App
 
